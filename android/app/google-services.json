@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "35752828261",
+    "project_id": "surveysproutapp-20251008153124",
+    "storage_bucket": "surveysproutapp-20251008153124.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35752828261:android:8c25fcac15ce7ce04b958c",
+        "android_client_info": {
+          "package_name": "com.example.surveysproutapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk8OwANivoJBiLB-LweSCzJIpfopFn1_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
