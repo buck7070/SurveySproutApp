@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
+import 'local_database.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
+  );
+  await AppDatabase.instance.database;
   runApp(const MyApp());
 }
 
@@ -98,6 +105,30 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
+  Future<void> _signInWithGoogle() async {
+    setState(() { _isLoading = true; _error = null; });
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      if (googleAuth != null) {
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      }
+    } on FirebaseAuthException catch (e) {
+      debugPrint('FirebaseAuthException during google sign in: ${e.code} ${e.message}');
+      _error = '(${e.code}) ${e.message}';
+    } catch (e, st) {
+      debugPrint('Exception during google sign in: $e');
+      debugPrint('$st');
+      _error = e.toString();
+    } finally {
+      if (mounted) setState(() { _isLoading = false; });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,11 +143,17 @@ class _SignInPageState extends State<SignInPage> {
             TextField(controller: _passwordController, decoration: const InputDecoration(labelText: 'Password'), obscureText: true),
             const SizedBox(height: 12),
             if (_isLoading) const CircularProgressIndicator(),
-            if (!_isLoading) Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            if (!_isLoading) Column(
               children: [
-                ElevatedButton(onPressed: _signIn, child: const Text('Sign in')),
-                ElevatedButton(onPressed: _signUp, child: const Text('Sign up')),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(onPressed: _signIn, child: const Text('Sign in')),
+                    ElevatedButton(onPressed: _signUp, child: const Text('Sign up')),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                ElevatedButton(onPressed: _signInWithGoogle, child: const Text('Sign in with Google')),
               ],
             ),
           ],

@@ -1,1 +1,26 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"surveysproutapp-20251008153124","appId":"1:35752828261:android:8c25fcac15ce7ce04b958c","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"surveysproutapp-20251008153124","configurations":{"android":"1:35752828261:android:8c25fcac15ce7ce04b958c","ios":"1:35752828261:ios:4cab25c0027ae6424b958c","web":"1:35752828261:web:a7a0b5ce1336c8ed4b958c"}}}}}}
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "surveysproutapp-20251008153124",
+          "appId": "1:35752828261:android:8c25fcac15ce7ce04b958c",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "surveysproutapp-20251008153124",
+          "configurations": {
+            "android": "1:35752828261:android:8c25fcac15ce7ce04b958c",
+            "ios": "1:35752828261:ios:4cab25c0027ae6424b958c",
+            "web": "1:35752828261:web:a7a0b5ce1336c8ed4b958c"
+          }
+        }
+      }
+    }
+  }
+}
